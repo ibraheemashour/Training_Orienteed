@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Home </title>
+</head>
+<body>
+
+<div>
+    <h1>Welcome To Home</h1>
+</div>
+    
+
+<div>
+    <h2>Add Product</h2>
+    <!-- <form action="/addproduct" method="post" class="product"> -->
+        <!-- <label for="idproduct"> ID Product</label>
+        <input type="number" name="idproduct"> -->
+      <!-- <label for="namepro">Name Product</label>  
+      <input type="text" name="nameproduct"  required>
+      <label for="priceprod">Price product</label>
+      <input type="text" name="priceproduct" required>
+      <button type="submit">Add Product</button> -->
+
+
+
+    <!-- </form> -->
+ 
+    <form action="/addproduct" method="post" class="product" enctype="multipart/form-data">
+        <!-- Product Details -->
+        <label for="namepro">Name Product</label>  
+        <input type="text" name="nameproduct" required>
+        <label for="priceprod">Price product</label>
+        <input type="text" name="priceproduct" required>
+    
+        <!-- Image Upload -->
+        <label for="image">Upload Image</label>
+        <input type="file" name="image">
+    
+        <!-- Submit Button -->
+        <button type="submit">Add Product</button>
+    </form>
+    
+
+
+
+</div>
+
+<!-- search -->
+<div>
+<h2>Search Product</h2>
+
+<form action="/searchpro" method="post">
+    <label for="nameofproduct">Name of Product</label>  
+    <input type="text" name="nameofproduct" >
+    <!-- <label for="priceofproduct">Price of product</label>
+    <input type="text" name="priceofproduct"> -->
+    <button type="submit">Search Product</button> 
+    
+</form>
+
+
+</div>
+<!-- search -->
+
+
+
+<!-- Delete -->
+
+
+<div>
+    <h2>Delete Product</h2>
+    
+    <form action="/deletepro" method="post">
+        <label for="deleteproduct">Name of Product</label>  
+        <input type="text" name="deleteproduct" required>
+        <label for="pricedelete">Price of product</label>
+        <input type="text" name="pricedelete" required>
+        <button type="submit">Delete Product</button> 
+        
+    </form>
+    
+    
+    </div>
+
+
+
+<!-- Delete -->
+
+
+
+
+<!-- Update -->
+
+
+<div>
+    <h2>Update Price Product</h2>
+    
+    <form action="/updatepro" method="post">
+        <label for="nameproduct">Name of Product</label>  
+        <input type="text" name="nameproduct" required>
+        <label for="oldprice">Price of product</label>
+        <input type="text" name="oldprice" required>
+        <label for="newprice">New Price of product</label>
+        <input type="text" name="newprice" required>
+        <button type="submit">Update Product</button> 
+        
+    </form>
+    
+    
+    </div>
+
+
+
+
+<!-- Update -->
+
+
+</body>
+</html>

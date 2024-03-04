@@ -1,0 +1,292 @@
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+// import 'loginPage.dart';
+
+// class ProfilePage extends StatefulWidget {
+//   final String baseUrl;
+//   final String name;
+//   final String email;
+//  final String password;
+
+//   const ProfilePage({
+//     Key? key,
+//     required this.baseUrl,
+//     required this.name,
+//     required this.email,
+//     required this.password,
+//   }) : super(key: key);
+
+//   @override
+//   _ProfilePageState createState() => _ProfilePageState();
+// }
+
+// class _ProfilePageState extends State<ProfilePage> {
+//   TextEditingController newPasswordController = TextEditingController();
+//   String newPassword = '';
+
+//   void changePassword() async {
+//     // Construct your API endpoint for password change
+//     String changePasswordUrl = widget.baseUrl + '/changepassword';
+//     print(changePasswordUrl);
+
+//     // Send the new password to the backend
+//     try {
+//       var response = await http.post(
+//         Uri.parse(changePasswordUrl),
+//         // headers: <String, String>{
+//         //   'Content-Type': 'application/json; charset=UTF-8',
+//         // },
+//          headers: {'Content-Type': 'application/json'},
+//         // body: jsonEncode(<String, String>{
+//         //   'email': widget.email,
+//         //   'newPassword': newPassword,
+//         // }),
+//         body: jsonEncode({'email': widget.email, 'newpassword': newPassword}),
+//       );
+
+//       // Handle response from the backend
+//       if (response.statusCode == 200) {
+//         // Password changed successfully
+//         print('Password changed successfully');
+//         print("the new password is  "+newPassword);
+//         // You can perform any additional actions here, such as showing a success message
+//       } else {
+//         // Password change failed
+//         print('Password change failed: ${response.body}');
+//         // You can handle error scenarios here, such as showing an error message
+//       }
+//     } catch (e) {
+//       print('Error occurred while changing password: $e');
+//       // Handle error scenarios here
+//     }
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Profile'),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(1.0),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           children: [
+//             UserAccountsDrawerHeader(
+//               accountName: Text(widget.name),
+//               accountEmail: Text(widget.email),
+//               currentAccountPicture: CircleAvatar(
+//                 backgroundColor: Colors.lightBlue,
+//                 child: Text(
+//                   widget.name.isNotEmpty ? widget.name[0].toUpperCase() : '',
+//                   style: TextStyle(fontSize: 25.0, color: Colors.white),
+//                 ),
+//               ),
+//               decoration: BoxDecoration(
+//                 color: Color.fromARGB(255, 102, 177, 238),
+//               ),
+//             ),
+//             Container(
+//               decoration: BoxDecoration(
+//                 color: Colors.blue[200],
+//                 borderRadius: BorderRadius.circular(10),
+//               ),
+//               child: Text(
+//                 "The Old Password Is : " + widget.password,
+//                 style: TextStyle(fontSize: 25),
+//               ),
+//             ),
+//             SizedBox(height: 20),
+//             TextField(
+//               controller: newPasswordController,
+//               decoration: InputDecoration(
+//                 labelText: 'New Password',
+//                 border: OutlineInputBorder(),
+//               ),
+//               onChanged: (value) {
+//                 setState(() {
+//                   newPassword = value;
+//                 });
+//               },
+//             ),
+//             SizedBox(height: 20),
+//             ElevatedButton(
+//               // onPressed: () {
+//               //   // Call the method to change password
+//               //   changePassword();
+//               // },
+//               onPressed: () {
+//                 // Call the method to change password
+//                 changePassword();
+//                 // Reload the page
+//                 Navigator.pushReplacement(
+//                   context,
+//                   MaterialPageRoute(
+//                     builder: (BuildContext context) => ProfilePage(
+//                       baseUrl: widget.baseUrl,
+//                       name: widget.name,
+//                       email: widget.email,
+//                       password: widget.password,
+//                     ),
+//                   ),
+//                 );
+//               },
+
+//               child: Padding(
+//                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+//                 child: Text(
+//                   'Change Password',
+//                   style: TextStyle(fontSize: 18),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+ 
+///////////////////
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'loginPage.dart';
+
+ class ProfilePage extends StatefulWidget {
+  final String baseUrl;
+  final String name;
+  final String email;
+  final String password;
+
+  const ProfilePage({
+    Key? key,
+    required this.baseUrl,
+    required this.name,
+    required this.email,
+    required this.password,
+  }) : super(key: key);
+
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  TextEditingController oldPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  String oldPassword = '';
+  String newPassword = '';
+
+  void changePassword() async {
+    String changePasswordUrl = widget.baseUrl + '/changepassword';
+
+    try {
+      var response = await http.post(
+        Uri.parse(changePasswordUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': widget.email,
+          'oldpassword': oldPassword,
+          'newpassword': newPassword,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('Password changed successfully');
+        // Clear text fields
+        oldPasswordController.clear();
+        newPasswordController.clear();
+        // Show success message or perform any additional actions
+      } else {
+        print('Password change failed: ${response.body}');
+        // Show error message or handle error scenarios
+      }
+    } catch (e) {
+      print('Error occurred while changing password: $e');
+      // Handle error scenarios
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(1.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text(widget.name),
+              accountEmail: Text(widget.email),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Colors.lightBlue,
+                child: Text(
+                  widget.name.isNotEmpty ? widget.name[0].toUpperCase() : '',
+                  style: TextStyle(fontSize: 25.0, color: Colors.white),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 102, 177, 238),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.blue[200],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              // child: Text(
+              //   "The Old Password Is : " + widget.password,
+              //   style: TextStyle(fontSize: 25),
+              // ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: oldPasswordController,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Old Password',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  oldPassword = value;
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: newPasswordController,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'New Password',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  newPassword = value;
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Call the method to change password
+                changePassword();
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Text(
+                  'Change Password',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
