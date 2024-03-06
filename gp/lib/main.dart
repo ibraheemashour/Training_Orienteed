@@ -9,6 +9,7 @@ import 'addProduct.dart';
 import 'bmi.dart';
 import 'test.dart';
 import 'home.dart';
+import 'product.dart';
 
 void main() {
   
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
     //  static const String baseUrl = 'http://192.168.10.122:3000';//office_orienteedGuest
     static const String baseUrl = 'http://192.168.1.126:3000';//office_orienteed2
-    //  static const String baseUrl = 'http://192.168.68.56:3000';//Home
+    //  static const String baseUrl = 'http://192.168.68.55:3000';//Home
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,8 @@ class MyApp extends StatelessWidget {
       // home:BMIPage(baseUrl: baseUrl),
       // home:MyStatefulWidget(),
       // home: FitnessTracker(baseUrl: baseUrl),
+        //  home:AddProductPage(),
+        // home: ImageList(),
        
 
     );

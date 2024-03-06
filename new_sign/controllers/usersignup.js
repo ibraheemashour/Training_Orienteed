@@ -71,6 +71,7 @@ exports.postSiginupPage=async(req,res)=>{
             res.redirect('/Home');
         }else{
             console.log('user already exist');
+            return res.status(400).json(  'user already exist' );
             res.redirect('/signup');
         }
       }catch(error){

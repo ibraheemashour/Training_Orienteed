@@ -11,4 +11,9 @@ router.post('/addproduct', upload.single('image'), Add.getAdd);
 
 
 
+
 module.exports = router;
+
+
+
+ 

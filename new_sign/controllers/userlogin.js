@@ -14,7 +14,7 @@ const userModel = require('../models/user');
 
 
 exports.postLoginPage=async(req,res)=>{
-    ///// here for web
+    /// here for web
     // try{
     //     console.log("the login post is called");
     //     const{email,password}=req.body;

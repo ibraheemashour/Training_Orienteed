@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
- 
- 
 class BMIPage extends StatefulWidget {
   final String baseUrl;
   const BMIPage({Key? key, required this.baseUrl}) : super(key: key);
@@ -18,36 +16,60 @@ class _BMIPageState extends State<BMIPage> {
   String message = '';
 
   Future<void> calculateBMI() async {
-    double weight = double.parse(weightController.text);
-    double height = double.parse(heightController.text) / 100; // convert height to meters
-    double bmi = weight / (height * height);
+    if (_validateInputs()) {
+      double weight = double.parse(weightController.text);
+      double height = double.parse(heightController.text) / 100; // convert height to meters
 
-    setState(() {
-      bmiResult = bmi;
-    });
-
-    final response = await http.post(
-      Uri.parse('${widget.baseUrl}/fetch'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        'weight': weight,
-        'height': height,
-      }),
-    );
+      final response = await http.post(
+        Uri.parse('${widget.baseUrl}/calculateBMI'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'weight': weight,
+          'height': height,
+        }),
+      );
 
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
         setState(() {
+          bmiResult = jsonResponse['bmi'];
           message = jsonResponse['message'];
         });
       } else {
         setState(() {
-          // message = 'Failed to load BMI data';
+          message = 'Failed to calculate BMI';
         });
       }
+    } else {
+      _showAlertDialog('Please fill in all fields.');
     }
+  }
+
+  bool _validateInputs() {
+    return weightController.text.isNotEmpty && heightController.text.isNotEmpty;
+  }
+
+  void _showAlertDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
