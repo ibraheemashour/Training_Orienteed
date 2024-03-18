@@ -46,6 +46,23 @@ class _ProfilePageState extends State<ProfilePage> {
         // Clear text fields
         oldPasswordController.clear();
         newPasswordController.clear();
+          showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Success'),
+              content: Text('Password changed successfully.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Close'),
+                ),
+              ],
+            );
+          },
+        );
         // Show success message or perform any additional actions
       } else {
         print('Password change failed: ${response.body}');

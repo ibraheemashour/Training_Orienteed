@@ -5,8 +5,7 @@ const product=new Schema({
     nameproduct:String,
     priceproduct:Number,
     countproduct:Number,
-    // data: Buffer,
-    data: String,
+    data: Buffer,
     contentType: String
 },{versionKey:false});
  

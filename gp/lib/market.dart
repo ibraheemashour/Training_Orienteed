@@ -1,23 +1,15 @@
-import 'signupPage.dart'; 
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'CategoryPage.dart';
+import 'addproduct.dart';
+import 'exerciseslist.dart';
+import 'product.dart';
+import 'showexercises.dart';
+import 'signupPage.dart';
 import 'bmi.dart';
 import 'bfp.dart';
-
-class Product {
-  final String name;
-  final String imageUrl;
-  final double price;
-  final int count;
-  bool isLiked;
-
-  Product({
-    required this.name,
-    required this.imageUrl,
-    required this.price,
-    required this.count,
-    this.isLiked = false,
-  });
-}
 
 class Market extends StatefulWidget {
   final String baseUrl;
@@ -28,12 +20,35 @@ class Market extends StatefulWidget {
 }
 
 class _MarketPageState extends State<Market> {
-  
-  final List<Product> products = [
-    Product(name: 'Product 1', imageUrl: 'https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg', price: 20.0, count: 5),
-    Product(name: 'Product 2', imageUrl: 'https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg', price: 30.0, count: 8),
-    Product(name: 'Product 3', imageUrl: 'https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg', price: 40.0, count: 11),
-  ];
+  List<Product> products = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProducts();
+  }
+
+  Future<void> fetchProducts() async {
+    final response = await http.get(Uri.parse('${widget.baseUrl}/products'));
+    if (response.statusCode == 200) {
+      final List<dynamic> productsData = jsonDecode(response.body);
+      setState(() {
+        products = productsData.map((productData) {
+          final List<int> bufferData = List<int>.from(productData['data']['data']);
+          final Uint8List imageData = Uint8List.fromList(bufferData);
+          return Product(
+            id: productData['idproduct'],
+            name: productData['nameproduct'],
+            price: productData['priceproduct'].toInt(),
+            count: productData['countproduct'],
+            imageData: imageData,
+          );
+        }).toList();
+      });
+    } else {
+      print('Failed to fetch products. Status code: ${response.statusCode}');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,30 +58,24 @@ class _MarketPageState extends State<Market> {
           padding: EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-          
             children: [
               Row(
-                  
                 children: [
- 
                   Expanded(
                     child: IconButton(
-                       
-                     icon: Icon(Icons.arrow_back),
-                    iconSize: 40,
-                    color: Colors.blue[800],
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Navigate back to the previous route
-                    },
-                    
+                      icon: Icon(Icons.arrow_back),
+                      iconSize: 40,
+                      color: Colors.blue[800],
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
                     ),
-                   
                   ),
-                    Spacer(), 
-                      Spacer(), 
-                        Spacer(), 
-                          Spacer(), 
-                            Spacer(), 
+                  Spacer(),
+                  Spacer(),
+                  Spacer(),
+                  Spacer(),
+                  Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: IconButton(
@@ -74,7 +83,6 @@ class _MarketPageState extends State<Market> {
                       icon: Icon(Icons.menu),
                       iconSize: 40,
                       color: Colors.blue[800],
-                       
                     ),
                   ),
                 ],
@@ -82,7 +90,10 @@ class _MarketPageState extends State<Market> {
               SizedBox(height: 30),
               Text(
                 "Categories",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blue[800]),
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue[800]),
               ),
               SizedBox(height: 30),
               Container(
@@ -90,265 +101,198 @@ class _MarketPageState extends State<Market> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-
-               Column(
-                    children: [
-                      Container( 
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        padding: EdgeInsets.all(10), 
-                        child: IconButton(
-                        onPressed: () {
-                        // Navigate to the desired page when the icon is tapped
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BMIPage(baseUrl: widget.baseUrl)),
-                        );
-                      },
-                      
-                      icon: Icon(Icons.fitness_center, size: 30, color: Colors.blue[800]),
-                        ),
-                        ),
-                      // padding: EdgeInsets.all(20),
-                      
-                      
-                    
-                      Text("BMI",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue[800]),),
-                    ],
-                  ),
-                     Padding(padding: EdgeInsets.only(left: 10)),
                     Column(
-                    children: [
- 
-                      ////////////////
-                      // IconButton(
-                      
-                        
-                      //   onPressed: () {
-                      //     // Navigate to the desired page when the icon is tapped
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(builder: (context) => SignupPage(baseUrl: widget.baseUrl)),
-                      //     );
-                      //   },
-                      //   icon: Icon(Icons.phone_android, size: 30, color: Colors.blue[800], ),
-                      // ),
-                      // Text("Mobile", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
-
-                  ////////////////////////////
-                    Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200], // Background color
-                      borderRadius: BorderRadius.circular(30),
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => BMIPage(baseUrl: widget.baseUrl)),
+                              );
+                            },
+                            icon: Icon(Icons.fitness_center, size: 30, color: Colors.blue[800]),
+                          ),
+                        ),
+                        Text("BMI", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                      ],
                     ),
-                    padding: EdgeInsets.all(10), // Adjust padding as needed
-                    child: IconButton(
-                      onPressed: () {
-                        // Navigate to the desired page when the icon is tapped
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BfpCalculator(baseUrl: widget.baseUrl)),
-                        );
-                      },
-                      icon: Icon(Icons.boy_rounded, size: 30, color: Colors.blue[800]),
-                    ),
-                  ),
-                  Text("BFP", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
-
-
-
-
-                    ],
-                  ),
                     Padding(padding: EdgeInsets.only(left: 10)),
                     Column(
-                    children: [
-                      Container( 
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(30),
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => BfpCalculator(baseUrl: widget.baseUrl)),
+                              );
+                            },
+                            icon: Icon(Icons.boy_rounded, size: 30, color: Colors.blue[800]),
+                          ),
                         ),
-                        padding: EdgeInsets.all(10), 
-                      child: IconButton(
-                        onPressed: () {
-                        // Navigate to the desired page when the icon is tapped
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignupPage(baseUrl: widget.baseUrl)),
-                        );
-                      },
-                      
-                      icon: Icon(Icons.electric_bike_rounded, size: 30, color: Colors.blue[800]),
-                        ),
-                        ),
-                      // padding: EdgeInsets.all(20),
-                      
-                      
-                    
-                      Text("Electric",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue[800]),),
-                    ],
-                  ),
-                     Padding(padding: EdgeInsets.only(left: 10)),
+                        Text("BFP", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                      ],
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 10)),
                     Column(
-                    children: [
-                      Container( 
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(30),
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ImageUploadScreen(baseUrl: widget.baseUrl)),
+                              );
+                            },
+                            icon: Icon(Icons.add_shopping_cart_rounded, size: 30, color: Colors.blue[800]),
+                          ),
                         ),
-                        padding: EdgeInsets.all(10), 
-                        child: IconButton(
-                        onPressed: () {
-                        // Navigate to the desired page when the icon is tapped
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignupPage(baseUrl: widget.baseUrl)),
-                        );
-                      },
-                      
-                      icon: Icon(Icons.cable, size: 30, color: Colors.blue[800]),
+                        Text("Add Product", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                      ],
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 10)),
+                    Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ImageDisplayScreen(baseUrl: widget.baseUrl)),
+                              );
+                            },
+                            icon: Icon(Icons.shopping_bag_outlined, size: 30, color: Colors.blue[800]),
+                          ),
                         ),
+                        Text("Shopping", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                      ],
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 10)),
+                    Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ExercisesListPage(baseUrl: widget.baseUrl)),
+                              );
+                            },
+                            icon: Icon(Icons.sports_gymnastics_sharp, size: 30, color: Colors.blue[800]),
+                          ),
                         ),
-                      // padding: EdgeInsets.all(20),
-                      
-                      
-                    
-                      Text("Cable",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue[800]),),
-                    ],
-                  ),
-                   Padding(padding: EdgeInsets.only(left: 10)),
-                       Column(
-                    children: [
-                      Container( 
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(30),
+                        Text("Exercises", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                      ],
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 10)),
+                    Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => CategoryPage(baseUrl: widget.baseUrl)),
+                              );
+                            },
+                            icon: Icon(Icons.food_bank, size: 30, color: Colors.blue[800]),
+                          ),
                         ),
-                        padding: EdgeInsets.all(10), 
-                        child: IconButton(
-                        onPressed: () {
-                        // Navigate to the desired page when the icon is tapped
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignupPage(baseUrl: widget.baseUrl)),
-                        );
-                      },
-                      
-                      icon: Icon(Icons.sim_card, size: 30, color: Colors.blue[800]),
-                        ),
-                        ),
-                      // padding: EdgeInsets.all(20),
-                      
-                      
-                    
-                      Text("Sim",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue[800]),),
-                    ],
-                  ),
-                   Padding(padding: EdgeInsets.only(left: 10)),
-                           Column(
-                    children: [
-                      Container( 
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        padding: EdgeInsets.all(10), 
-                        child: IconButton(
-                        onPressed: () {
-                        // Navigate to the desired page when the icon is tapped
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignupPage(baseUrl: widget.baseUrl)),
-                        );
-                      },
-                      
-                      icon: Icon(Icons.wallet_giftcard, size: 30, color: Colors.blue[800]),
-                        ),
-                        ),
-                      // padding: EdgeInsets.all(20),
-                      
-                      
-                    
-                      Text("Gift",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue[800]),),
-                    ],
-                  ),
-                 
+                        Text("Foods", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                      ],
+                    ),
                   ],
                 ),
               ),
-               
-            
               SizedBox(height: 20),
-              Text(
-                "Products",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blue[800]),
-              ),
+              Text("Products", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blue[800])),
               SizedBox(height: 5),
               SingleChildScrollView(
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.6, // Set height of the container
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: products.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.55, // Adjust as needed
-                    ),
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.network(
-                              products[index].imageUrl,
-                              height: 150,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                products[index].name,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                child: Wrap(
+                  spacing: 4.0,
+                  runSpacing: 4.0,
+                  alignment: WrapAlignment.spaceEvenly,
+                  children: List.generate(
+                    (products.length / 2).ceil(),
+                    (index) {
+                      int startIndex = index * 2;
+                      int endIndex = (index * 2) + 2 < products.length ? (index * 2) + 2 : products.length;
+
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: products.getRange(startIndex, endIndex).map((product) {
+                          return Expanded(
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width / 2 - 8.0,
+                              child: Card(
+                                elevation: 4,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 220,
+                                      child: Image.memory(
+                                        product.imageData,
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            product.name,
+                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                          ),
+                                          SizedBox(height: 4),
+                                          Text('Price: \$${product.price}', style: TextStyle(fontSize: 16)),
+                                          SizedBox(height: 4),
+                                          Text('Count: ${product.count}', style: TextStyle(fontSize: 16)),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Price: \$${products[index].price.toStringAsFixed(2)}',
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Count: ${products[index].count}',
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: IconButton(
-                                onPressed: () {
-                                  // Handle like button press
-                                   setState(() {
-                                    // Toggle like status
-                                    products[index].isLiked = !products[index].isLiked;
-                                  });
-                                },
-                                icon: Icon(
-                                 products[index].isLiked ? Icons.favorite : Icons.favorite_border,
-                                 color: Colors.red,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          );
+                        }).toList(),
                       );
                     },
-                  ),
+                  ).toList(),
                 ),
               ),
             ],
@@ -358,4 +302,6 @@ class _MarketPageState extends State<Market> {
     );
   }
 }
+
+/////////////////
  

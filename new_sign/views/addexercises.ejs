@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Category Exercises</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h2>Add Category Exercise</h2>
+    <form action="/CategoryExercise" method="post">
+        <label for="type">Type of Exercise:</label>
+        <select id="type" name="type">
+            <option value=""></option>
+            <option value="Abs">Abs</option>
+            <option value="Arms">Arms</option>
+            <option value="Back">Back</option>
+            <option value="Cardio">Cardio</option>
+            <option value="Chest">Chest</option>
+            <option value="Legs">Legs</option>
+            <option value="Shoulders">Shoulders</option>
+            <!-- Add more options as needed -->
+        </select><br><br>
+        <label for="numbers">Numbers of Exercises (comma-separated):</label>
+        <input type="text" id="numbers" name="numbers" required><br><br> <!-- Input field for numbers -->
+        <input type="submit" value="Add Exercise">
+    </form>
+
+    <h2>Delete Category Exercise</h2>
+    <form action="/removeExercise" method="post">
+        <label for="typeToDelete">Type of Exercise:</label>
+        <select id="typeToDelete" name="type">
+            <option value=""></option>
+            <option value="Abs">Abs</option>
+            <option value="Arms">Arms</option>
+            <option value="Back">Back</option>
+            <option value="Cardio">Cardio</option>
+            <option value="Chest">Chest</option>
+            <option value="Legs">Legs</option>
+            <option value="Shoulders">Shoulders</option>
+            <!-- Add more options as needed -->
+        </select><br><br>
+        <label for="numberToRemove">Number to Remove:</label>
+        <input type="text" id="numberToRemove" name="numberToRemove" required><br><br> <!-- Input field for number to remove -->
+        <input type="submit" value="Remove Exercise">
+    </form>
+</body>
+</html>

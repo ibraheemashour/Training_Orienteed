@@ -4,7 +4,8 @@ const login = require("../controllers/userlogin");
 
 
 router.get('/login', login.getLoginPage);
-router.post('/login', login.postLoginPage);
+router.post('/login', login.postLoginPage);//for mobile
 
+router.post('/loginweb', login.postLoginPageWeb);//for web
 
 module.exports = router;

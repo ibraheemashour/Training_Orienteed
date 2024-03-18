@@ -13,31 +13,84 @@ const userModel = require('../models/user');
 
 
 
-exports.postLoginPage=async(req,res)=>{
-    /// here for web
-    // try{
-    //     console.log("the login post is called");
-    //     const{email,password}=req.body;
-    //     console.log(email,password);
+exports.postLoginPageWeb=async(req,res)=>{
+    // here for web
+    try{
+        console.log("the login post is called");
+        const{email,password}=req.body;
+        console.log(email,password);
         
-    //     const user=await userModel.findOne({email:email,password:password});
-    //     if(user){
-    //         req.session.user = { email, email: user.email };
-    //         console.log("the name is "+user.username);
-    //         res.redirect('/Home');
-    //     }else{
-    //         console.log('not found');
-    //         res.redirect('/');
-    //     }
-    // }catch(error){
-    //     console.log(error);
-    // }
+        const user = await loginUser(email, password);
+        
+        // const user=await userModel.findOne({email:email,password:password});
+        if(user){
+            req.session.user = { email, email: user.email };
+            console.log("the name is "+user.username);
+            res.redirect('/Home');
+        }else{
+            console.log('not found');
+            res.redirect('/');
+        }
+    }catch(error){
+        console.log(error);
+    }
+  }
+////////////////////////////////////////////
 
+async function loginUser(email, password) {
+  try {
+      // Retrieve user record from the database based on username
+      const user = await userModel.findOne({ email });
+
+      if (user) {
+          // Compare hashed password stored in the database with the password provided during login
+          const passwordMatch = await bcrypt.compare(password, user.password);
+
+          if (passwordMatch) {
+              // Passwords match, authentication successful
+              console.log('User authenticated');
+              console.log(`password= ${password}`);
+              console.log(`password= ${user.password}`);
+              // Return the user object if authentication successful
+              return user;
+          } else {
+              // Passwords don't match, authentication failed
+              console.log('Incorrect password');
+              // Return null if authentication failed
+              return null;
+          }
+      } else {
+          // User not found
+          console.log('User not found');
+          // Return null if user not found
+          return null;
+      }
+  } catch (error) {
+      // Handle error (e.g., database error)
+      console.error('Error occurred:', error);
+      // Return null if error occurred
+      return null;
+  }
+}
+
+
+
+
+
+
+
+
+  /////////////////////////////////////
+  
+exports.postLoginPage=async(req,res)=>{
     /////here for mobile 
         try {
             const { email, password } = req.body;
             
-          const user = await userModel.findOne({ email, password });
+
+            const user = await loginUser(email, password);
+
+          // const user = await userModel.findOne({ email, password });
           // const match = await bcrypt.compare(password, user.password);
           console.log(email, password);
        
@@ -51,7 +104,6 @@ exports.postLoginPage=async(req,res)=>{
                 // other user details
               });
             // }
-              
             
             console.log("Login Successful");
             console.log("the email is : "+email+" the password is : "+password);

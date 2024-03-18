@@ -1,0 +1,37 @@
+<!-- views/exercises.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercises</title>
+    <style>
+        /* CSS to resize images */
+        .exercise-image {
+            width: 200px; /* Set the width of the image */
+            height: auto; /* Maintain aspect ratio */
+        }
+    </style>
+</head>
+<body>
+    <h1>Exercise List</h1>
+    <ul>
+        <% exercises.forEach(function(exercise) { %>
+            <li>
+                <!-- Apply the 'exercise-image' class to the image -->
+                <img class="exercise-image" src="<%= exercise.image %>" alt="<%= exercise.name %>">
+                <p><%= exercise.id %> - <%= exercise.name %></p>
+            </li>
+        <% }); %>
+    </ul>
+
+    <% if (currentPage > 1) { %>
+        <a href="/exercises?page=<%= currentPage - 1 %>">Previous</a>
+    <% } %>
+
+    <% if (currentPage < totalPages) { %>
+        <a href="/exercises?page=<%= currentPage + 1 %>">Next</a>
+    <% } %>
+</body>
+</html>

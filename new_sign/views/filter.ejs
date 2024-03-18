@@ -1,0 +1,80 @@
+<!-- views/filter.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Exercise Filters</title>
+</head>
+<style>
+    /* style.css */
+
+/* Resetting default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+h1 {
+    text-align: center;
+    padding: 20px 0;
+    color: #333;
+}
+
+/* List styles */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto;
+    width: 80%;
+}
+
+li {
+    padding: 10px 0;
+}
+
+/* Link styles */
+a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #007bff; /* Change to desired hover color */
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+    ul {
+        width: 100%;
+    }
+}
+
+</style>
+<body>
+    <h1>Exercise Filters</h1>
+    <ul>
+        <li><a href="/exercises/Abs">Abs</a></li>
+        <li><a href="/exercises/Arms">Arms</a></li>
+        <li><a href="/exercises/Back">Back</a></li>
+        <li><a href="/exercises/Cardio">Cardio</a></li>
+        <li><a href="/exercises/Chest">Chest</a></li>
+        <li><a href="/exercises/Legs">Legs</a></li>
+        <li><a href="/exercises/Shoulders">Shoulders</a></li>
+    </ul>
+</body>
+</html>

@@ -4,10 +4,20 @@ const Add = require("../controllers/addproduct");
  
 const multer = require('multer');
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage: storage });
 
-router.post('/addproduct', upload.single('image'), Add.getAdd);
+const upload = multer({ dest: 'uploads/' });
+ 
+
+
+
+router.post('/addproduct',upload.single('image'), Add.getAdd);//for mobile  
+
+router.post('/addproductweb',upload.single('image'), Add.getAddweb);//for web
+
+
+
 
 
 
