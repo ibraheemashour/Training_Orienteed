@@ -65,7 +65,18 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Products'),
+        title: Text('Products',style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue[800]),),
+         leading: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      iconSize: 40,
+                      color: Colors.blue[800],
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
       ),
       body: SingleChildScrollView(
         child: Wrap(

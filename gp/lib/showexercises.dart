@@ -152,6 +152,14 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Exercises - ${widget.category}',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue[800]),),
+        leading: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      iconSize: 40,
+                      color: Colors.blue[800],
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())

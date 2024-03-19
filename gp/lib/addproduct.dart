@@ -278,7 +278,18 @@ void _showSuccessDialog() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Upload'),
+        title: Text('Image Upload',style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue[800]),),
+        leading: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      iconSize: 40,
+                      color: Colors.blue[800],
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
       ),
       body: Center(
         child: Column(

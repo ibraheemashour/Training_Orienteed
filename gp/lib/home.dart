@@ -1041,8 +1041,9 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.home),
           ),
           BottomNavigationBarItem(
-            label: "Search",
-            icon: Icon(Icons.search),
+            label: "Market",
+            icon: Icon(Icons.shopping_cart),
+            
           ),
           BottomNavigationBarItem(
             label: "Profile",
@@ -1056,6 +1057,14 @@ class _HomePageState extends State<HomePage> {
           }
           if (indexOfItem == 1) {
             print('Search');
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Market(
+                  baseUrl: widget.baseUrl,
+                ),
+              ),
+            );
           }
           if (indexOfItem == 2) {
             print('Profile');

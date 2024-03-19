@@ -662,12 +662,12 @@ const RecipeSchema = new mongoose.Schema({
       default: [],
       required: true
   },
-  comments: {
-    type: [String],
-    default: [],
-    required: true
-},
-// comments: [{ username: String, text: String }], // Modify comments field
+//   comments: {
+//     type: [String],
+//     default: [],
+//     required: true
+// },
+comments: [{ username: String, text: String }], // Modify comments field
 
   },{versionKey:false});
   
@@ -702,7 +702,7 @@ const RecipeSchema = new mongoose.Schema({
           // Generate a new unique ID for the next product
           const newId = lastPost ? lastPost.idPost + 1 : 1;
 
-          // Create a new product object
+          // Create a new post object
           let newPost = new Post({
             idPost: newId,
             title,
@@ -710,6 +710,10 @@ const RecipeSchema = new mongoose.Schema({
             author: name,
             likes: [],
             comments: [],
+            //   comments: [{
+            //   username: name,
+            //   text: comment
+            // }],
               // countproduct: 1, // Initialize countproduct to 1 for the new product
               data: fs.readFileSync(req.file.path), // Read the uploaded file
               contentType: req.file.mimetype // Set the MIME type of the file
@@ -770,24 +774,53 @@ const RecipeSchema = new mongoose.Schema({
       res.status(500).send('Error updating likes');
     }
   });
-  app.post('/posts/:idPost/comments', async (req, res) => {
-    const { idPost } = req.params;
-    const { comment } = req.body;
+
+
+  // app.post('/posts/:idPost/comments', async (req, res) => {
+  //   const { idPost } = req.params;
+  //   const { comment, username } = req.body;
+  //   // console.log(username);
   
-    try {
-      const post = await Post.findOne({ idPost });
-      if (!post) {
-        return res.status(404).send('Post not found');
-      }
+  //   try {
+  //     const post = await Post.findOne({ idPost });
+  //     if (!post) {
+  //       return res.status(404).send('Post not found');
+  //     }
   
-      post.comments.push(comment);
-      await post.save();
+  //     post.comments.push(comment);
+  //     await post.save();
   
-      res.status(200).send('Comment added successfully');
-    } catch (err) {
-      res.status(500).send('Error adding comment');
+  //     res.status(200).send('Comment added successfully');
+  //   } catch (err) {
+  //     res.status(500).send('Error adding comment');
+  //   }
+  // });
+
+
+
+    app.post('/posts/:idPost/comments', async (req, res) => {
+  const { idPost } = req.params;
+  const { username, comment } = req.body; // Retrieve username and comment from the request body
+
+  try {
+    const post = await Post.findOne({ idPost });
+    if (!post) {
+      return res.status(404).send('Post not found');
     }
-  });
+
+    post.comments.push({ username, text: comment }); // Store the username along with the comment
+    await post.save();
+
+    res.status(200).send('Comment added successfully');
+  } catch (err) {
+    res.status(500).send('Error adding comment');
+  }
+});
+
+
+
+
+
 
   // app.post('/posts/:idPost/comments', async (req, res) => {
   //   const { idPost } = req.params;

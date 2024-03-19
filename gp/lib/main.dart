@@ -24,8 +24,8 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
     //  static const String baseUrl = 'http://192.168.10.122:3000';//office_orienteedGuest
-    // static const String baseUrl = 'http://192.168.1.126:3000';//office_orienteed2
-     static const String baseUrl = 'http://192.168.68.54:3000';//Home
+    static const String baseUrl = 'http://192.168.1.126:3000';//office_orienteed2
+    //  static const String baseUrl = 'http://192.168.68.54:3000';//Home
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

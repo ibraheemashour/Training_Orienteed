@@ -47,7 +47,7 @@
 //           return Post(
 //             idPost: postData['idPost'],
 //             title: postData['title'],
-//             content: postData['content'], 
+//             content: postData['content'],
 //             author: postData['author'],
 //             imageData: imageData,
 //           );
@@ -120,9 +120,6 @@
 //   }
 // }
 
-
-
-
 // import 'dart:convert';
 // import 'dart:typed_data';
 // import 'package:flutter/material.dart';
@@ -175,7 +172,7 @@
 //           return Post(
 //             idPost: postData['idPost'],
 //             title: postData['title'],
-//             content: postData['content'], 
+//             content: postData['content'],
 //             author: postData['author'],
 //             imageData: imageData,
 //             likes: [], // Initialize likes as an empty list
@@ -311,12 +308,6 @@
 //   }
 // }
 
-
-
-
-
-
-
 // import 'dart:convert';
 // import 'dart:typed_data';
 // import 'package:flutter/material.dart';
@@ -369,7 +360,7 @@
 //           return Post(
 //             idPost: postData['idPost'],
 //             title: postData['title'],
-//             content: postData['content'], 
+//             content: postData['content'],
 //             author: postData['author'],
 //             imageData: imageData,
 //             likes: List<String>.from(postData['likes']), // Load likes from backend
@@ -522,8 +513,6 @@
 //   }
 // }
 
-
-
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -536,7 +525,7 @@ class Post {
   final String author;
   final Uint8List imageData;
   List<String> likes;
-  List<String> comments;
+  List<Comment> comments;
 
   Post({
     required this.idPost,
@@ -549,10 +538,18 @@ class Post {
   });
 }
 
+class Comment {
+  final String username;
+  final String text;
+
+  Comment({required this.username, required this.text});
+}
+
 class PostShow extends StatefulWidget {
   final String baseUrl;
   final String username;
-  const PostShow({Key? key, required this.baseUrl, required this.username}) : super(key: key);
+  const PostShow({Key? key, required this.baseUrl, required this.username})
+      : super(key: key);
   @override
   _PostShowState createState() => _PostShowState();
 }
@@ -572,18 +569,31 @@ class _PostShowState extends State<PostShow> {
 
     if (response.statusCode == 200) {
       final List<dynamic> postsData = jsonDecode(response.body);
+
       setState(() {
         posts = postsData.map((postData) {
           final List<int> bufferData = List<int>.from(postData['data']['data']);
           final Uint8List imageData = Uint8List.fromList(bufferData);
+
+          List<Comment> comments = [];
+          if (postData['comments'] != null) {
+            comments =
+                (postData['comments'] as List<dynamic>).map((commentData) {
+              return Comment(
+                username: commentData['username'],
+                text: commentData['text'],
+              );
+            }).toList();
+          }
+
           return Post(
             idPost: postData['idPost'],
             title: postData['title'],
-            content: postData['content'], 
+            content: postData['content'],
             author: postData['author'],
             imageData: imageData,
             likes: List<String>.from(postData['likes']),
-            comments: List<String>.from(postData['comments']),
+            comments: comments,
           );
         }).toList();
       });
@@ -621,7 +631,7 @@ class _PostShowState extends State<PostShow> {
   Future<void> submitComment(int postId, String comment) async {
     final response = await http.post(
       Uri.parse('${widget.baseUrl}/posts/$postId/comments'),
-      body: jsonEncode({'comment': comment}),
+      body: jsonEncode({'username': widget.username, 'comment': comment}),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -659,7 +669,18 @@ class _PostShowState extends State<PostShow> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Products'),
+        title: Text('Posts',style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue[800]),),
+        leading: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      iconSize: 40,
+                      color: Colors.blue[800],
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -738,7 +759,8 @@ class _PostShowState extends State<PostShow> {
                               SizedBox(width: 8),
                               ElevatedButton(
                                 onPressed: () {
-                                  submitComment(post.idPost, _commentController.text);
+                                  submitComment(
+                                      post.idPost, _commentController.text);
                                   _commentController.clear();
                                 },
                                 child: Text('Comment'),
@@ -751,18 +773,43 @@ class _PostShowState extends State<PostShow> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Comments:',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
                                 SizedBox(height: 4),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: post.comments.map((comment) => Text(comment)).toList(),
-                                ),
+                                if (post.comments.isNotEmpty)
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 4),
+                                      post.comments.length > 2
+                                          ? ExpansionTile(
+                                              title: Text('Show comments'),
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: post.comments
+                                                      .map((comment) => Text(
+                                                            '${comment.username}: ${comment.text}',
+                                                            style: TextStyle(
+                                                                fontSize: 16),
+                                                          ))
+                                                      .toList(),
+                                                ),
+                                              ],
+                                            )
+                                          : Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: post.comments
+                                                  .map((comment) => Text(
+                                                        '${comment.username}: ${comment.text}',
+                                                        style: TextStyle(
+                                                            fontSize: 16),
+                                                      ))
+                                                  .toList(),
+                                            ),
+                                    ],
+                                  ),
                               ],
                             ),
                         ],
@@ -784,7 +831,3 @@ class _PostShowState extends State<PostShow> {
     super.dispose();
   }
 }
-
-
-
-

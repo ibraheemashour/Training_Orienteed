@@ -28,7 +28,18 @@ class _BfpCalculatorState extends State<BfpCalculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BFP Calculator'),
+        title: Text('BFP Calculator',style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue[800]),),
+        leading: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      iconSize: 40,
+                      color: Colors.blue[800],
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
