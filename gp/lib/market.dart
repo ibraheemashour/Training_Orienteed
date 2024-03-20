@@ -34,7 +34,8 @@ class _MarketPageState extends State<Market> {
       final List<dynamic> productsData = jsonDecode(response.body);
       setState(() {
         products = productsData.map((productData) {
-          final List<int> bufferData = List<int>.from(productData['data']['data']);
+          final List<int> bufferData =
+              List<int>.from(productData['data']['data']);
           final Uint8List imageData = Uint8List.fromList(bufferData);
           return Product(
             id: productData['idproduct'],
@@ -113,13 +114,19 @@ class _MarketPageState extends State<Market> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => BMIPage(baseUrl: widget.baseUrl)),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        BMIPage(baseUrl: widget.baseUrl)),
                               );
                             },
-                            icon: Icon(Icons.fitness_center, size: 30, color: Colors.blue[800]),
+                            icon: Icon(Icons.fitness_center,
+                                size: 30, color: Colors.blue[800]),
                           ),
                         ),
-                        Text("BMI", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                        Text("BMI",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[800])),
                       ],
                     ),
                     Padding(padding: EdgeInsets.only(left: 10)),
@@ -135,13 +142,19 @@ class _MarketPageState extends State<Market> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => BfpCalculator(baseUrl: widget.baseUrl)),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        BfpCalculator(baseUrl: widget.baseUrl)),
                               );
                             },
-                            icon: Icon(Icons.boy_rounded, size: 30, color: Colors.blue[800]),
+                            icon: Icon(Icons.boy_rounded,
+                                size: 30, color: Colors.blue[800]),
                           ),
                         ),
-                        Text("BFP", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                        Text("BFP",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[800])),
                       ],
                     ),
                     Padding(padding: EdgeInsets.only(left: 10)),
@@ -157,13 +170,19 @@ class _MarketPageState extends State<Market> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ImageUploadScreen(baseUrl: widget.baseUrl)),
+                                MaterialPageRoute(
+                                    builder: (context) => ImageUploadScreen(
+                                        baseUrl: widget.baseUrl)),
                               );
                             },
-                            icon: Icon(Icons.add_shopping_cart_rounded, size: 30, color: Colors.blue[800]),
+                            icon: Icon(Icons.add_shopping_cart_rounded,
+                                size: 30, color: Colors.blue[800]),
                           ),
                         ),
-                        Text("Add Product", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                        Text("Add Product",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[800])),
                       ],
                     ),
                     Padding(padding: EdgeInsets.only(left: 10)),
@@ -179,13 +198,19 @@ class _MarketPageState extends State<Market> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ImageDisplayScreen(baseUrl: widget.baseUrl)),
+                                MaterialPageRoute(
+                                    builder: (context) => ImageDisplayScreen(
+                                        baseUrl: widget.baseUrl)),
                               );
                             },
-                            icon: Icon(Icons.shopping_bag_outlined, size: 30, color: Colors.blue[800]),
+                            icon: Icon(Icons.shopping_bag_outlined,
+                                size: 30, color: Colors.blue[800]),
                           ),
                         ),
-                        Text("Shopping", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                        Text("Shopping",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[800])),
                       ],
                     ),
                     Padding(padding: EdgeInsets.only(left: 10)),
@@ -201,13 +226,19 @@ class _MarketPageState extends State<Market> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ExercisesListPage(baseUrl: widget.baseUrl)),
+                                MaterialPageRoute(
+                                    builder: (context) => ExercisesListPage(
+                                        baseUrl: widget.baseUrl)),
                               );
                             },
-                            icon: Icon(Icons.sports_gymnastics_sharp, size: 30, color: Colors.blue[800]),
+                            icon: Icon(Icons.sports_gymnastics_sharp,
+                                size: 30, color: Colors.blue[800]),
                           ),
                         ),
-                        Text("Exercises", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                        Text("Exercises",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[800])),
                       ],
                     ),
                     Padding(padding: EdgeInsets.only(left: 10)),
@@ -223,21 +254,32 @@ class _MarketPageState extends State<Market> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => CategoryPage(baseUrl: widget.baseUrl)),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CategoryPage(baseUrl: widget.baseUrl)),
                               );
                             },
-                            icon: Icon(Icons.food_bank, size: 30, color: Colors.blue[800]),
+                            icon: Icon(Icons.food_bank,
+                                size: 30, color: Colors.blue[800]),
                           ),
                         ),
-                        Text("Foods", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[800])),
+                        Text("Foods",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[800])),
                       ],
                     ),
                   ],
                 ),
               ),
               SizedBox(height: 20),
-              Text("Products", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blue[800])),
+              Text("Products",
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue[800])),
               SizedBox(height: 5),
+              
               SingleChildScrollView(
                 child: Wrap(
                   spacing: 4.0,
@@ -247,14 +289,19 @@ class _MarketPageState extends State<Market> {
                     (products.length / 2).ceil(),
                     (index) {
                       int startIndex = index * 2;
-                      int endIndex = (index * 2) + 2 < products.length ? (index * 2) + 2 : products.length;
+                      int endIndex = (index * 2) + 2 < products.length
+                          ? (index * 2) + 2
+                          : products.length;
 
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: products.getRange(startIndex, endIndex).map((product) {
+                        children: products
+                            .getRange(startIndex, endIndex)
+                            .map((product) {
                           return Expanded(
                             child: SizedBox(
-                              width: MediaQuery.of(context).size.width / 2 - 8.0,
+                              width:
+                                  MediaQuery.of(context).size.width / 2 - 8.0,
                               child: Card(
                                 elevation: 4,
                                 child: Column(
@@ -271,16 +318,21 @@ class _MarketPageState extends State<Market> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             product.name,
-                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                           SizedBox(height: 4),
-                                          Text('Price: \$${product.price}', style: TextStyle(fontSize: 16)),
+                                          Text('Price: \$${product.price}',
+                                              style: TextStyle(fontSize: 16)),
                                           SizedBox(height: 4),
-                                          Text('Count: ${product.count}', style: TextStyle(fontSize: 16)),
+                                          Text('Count: ${product.count}',
+                                              style: TextStyle(fontSize: 16)),
                                         ],
                                       ),
                                     ),

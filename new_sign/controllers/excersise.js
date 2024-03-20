@@ -192,3 +192,90 @@ exports.getExercisesWeb = async (req, res) => {
 
 
 
+
+
+  // const ExerciseImageSchema = new mongoose.Schema({
+//   name: String,
+//   imageUrl: String,
+// });
+
+// const ExerciseImage = mongoose.model('ExerciseImage', ExerciseImageSchema);
+
+// // Express route for /api/v2/exerciseimage/?limit=2
+// app.get('exercises', async (req, res) => {
+//   try {
+//     const response = await axios.get('https://wger.de/api/v2/exerciseimage/');
+//     const exerciseImages = response.data.results;
+//     res.render('exercises', { exerciseImages }); // Rendering exercise.ejs
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Server Error');
+//   }
+// });
+
+
+///////////////////////////////////////////////////////
+
+
+
+// const exerciseSchema = new mongoose.Schema({
+//   id: Number,
+ 
+//   image: String,
+ 
+// },{versionKey:false}
+// );
+
+
+///// this is for fetch and save exercise
+
+
+// const Exercise = mongoose.model('Exercise', exerciseSchema);
+
+// async function fetchAndSaveExercises(url) {
+//   try {
+//     const response = await axios.get(url);
+//     const exercisesData = response.data.results;
+
+//     // Save each exercise to MongoDB
+//     for (const exerciseData of exercisesData) {
+//       const exercise = new Exercise({
+//         id: exerciseData.id,
+ 
+//         image: exerciseData.image,
+   
+//       });
+//       await exercise.save();
+//     }
+
+//     console.log('Exercises saved to MongoDB');
+
+//     // Check if there's a next page
+//     if (response.data.next) {
+//       const nextOffset = new URL(response.data.next).searchParams.get('offset');
+//       const nextUrl = `https://wger.de/api/v2/exerciseimage/?limit=20&offset=${nextOffset}`;
+//       await fetchAndSaveExercises(nextUrl); // Recursively fetch next page
+//     }
+//   } catch (error) {
+//     console.error('Error fetching or saving exercises:', error);
+//   }
+// }
+
+
+
+
+
+// // Fetch and save exercises if not already present in MongoDB
+// async function init() {
+//   const count = await Exercise.countDocuments();
+//   if (count === 0) {
+//     // await fetchAndSaveExercises();
+
+//           // Start fetching exercises from the initial URL
+//      await fetchAndSaveExercises('https://wger.de/api/v2/exerciseimage/?limit=20');
+
+//   }
+// }
+
+// init();
+/////////////// here end the fetch and save exercise

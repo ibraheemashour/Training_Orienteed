@@ -303,7 +303,11 @@ void _showSuccessDialog() {
                   ),
             ElevatedButton(
               onPressed: _getImage,
-              child: Text('Select Image'),
+              child: Text('Select Image',style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue[800],
+              )),
             ),
             TextField(
               controller: _nameController,
@@ -320,7 +324,11 @@ void _showSuccessDialog() {
             ),
             ElevatedButton(
               onPressed: _uploadImage,
-              child: Text('Upload Image'),
+              child: Text('Upload Image',style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue[800],
+              )),
             ),
           ],
         ),
