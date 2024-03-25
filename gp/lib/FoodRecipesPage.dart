@@ -560,6 +560,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'CategoryPage.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class Recipe {
   final String name;
@@ -754,7 +755,11 @@ class _FoodRecipesPageState extends State<FoodRecipesPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Food Recipes',style: TextStyle(color: Colors.blue[800],fontWeight: FontWeight.bold),),
+        title: Text(
+          'Food Recipes',
+          style:
+              TextStyle(color: Colors.blue[800], fontWeight: FontWeight.bold),
+        ),
         // actions: [
         //   IconButton(
         //     onPressed: () {},
@@ -868,41 +873,73 @@ class _FoodRecipesPageState extends State<FoodRecipesPage> {
   }
 
   void _showDescriptionDialog(BuildContext context, Recipe recipe) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(recipe.name),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(recipe.description),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    // ElevatedButton(
-                    //   onPressed: () {
-                    //     _getCalories(context, recipe);
-                    //   },
-                    //   child: Text('Nutrition Data'),
-                    // ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Close'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     return AlertDialog(
+    //       title: Text(recipe.name),
+    //       content: SingleChildScrollView(
+    //         child: Column(
+    //           mainAxisSize: MainAxisSize.min,
+    //           crossAxisAlignment: CrossAxisAlignment.start,
+    //           children: [
+    //             Text(recipe.description),
+    //             SizedBox(height: 20),
+    //             Row(
+    //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //               children: [
+    //                 // ElevatedButton(
+    //                 //   onPressed: () {
+    //                 //     _getCalories(context, recipe);
+    //                 //   },
+    //                 //   child: Text('Nutrition Data'),
+    //                 // ),
+    //                 ElevatedButton(
+    //                   onPressed: () {
+    //                     Navigator.of(context).pop();
+    //                   },
+    //                   child: Text('Close'),
+    //                 ),
+    //               ],
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
+
+  AwesomeDialog(
+  context: context,
+  dialogType: DialogType.info,
+  animType: AnimType.rightSlide,
+  // title: recipe.name,
+  width: 500,
+  body: Container(
+    height: 400, // Set your desired height here
+    child: SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(" "+recipe.name, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          SizedBox(height: 20),
+          Text(recipe.description),
+          // SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           ),
-        );
-      },
-    );
+        ],
+      ),
+    ),
+  ),
+  btnCancelText: 'Close',
+    btnCancelOnPress: () {},
+)..show();
+
+
+
+
   }
 
   void _getCalories(BuildContext context, Recipe recipe) async {
@@ -935,29 +972,51 @@ class _FoodRecipesPageState extends State<FoodRecipesPage> {
           }).toList();
 
           // Show a dialog with the nutritional information
-          showDialog(
+          // showDialog(
+          //   context: context,
+          //   builder: (BuildContext context) {
+          //     return AlertDialog(
+          //       title: Text('Nutrition Data'),
+          //       content: SingleChildScrollView(
+          //         child: Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           mainAxisSize: MainAxisSize.min,
+          //           children: nutritionalInfoWidgets,
+          //         ),
+          //       ),
+          //       actions: <Widget>[
+          //         TextButton(
+          //           onPressed: () {
+          //             Navigator.of(context).pop();
+          //           },
+          //           child: Text('Close'),
+          //         ),
+          //       ],
+          //     );
+          //   },
+          // );
+
+          AwesomeDialog(
             context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Nutrition Data'),
-                content: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: nutritionalInfoWidgets,
-                  ),
+            dialogType: DialogType.info,
+            animType: AnimType.rightSlide,
+            width: nutritionalInfoWidgets.length * 500.0,
+            title: 'Nutrition Data',
+            body: Container(
+              height: 260, // Set your desired height here
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: nutritionalInfoWidgets,
                 ),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('Close'),
-                  ),
-                ],
-              );
-            },
-          );
+              ),
+            ),
+            btnCancelText: 'Close',
+            btnCancelOnPress: () {},
+          )..show();
+
+//
         } else {
           print('No data found');
         }

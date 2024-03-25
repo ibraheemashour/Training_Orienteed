@@ -196,6 +196,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class ImageUploadScreen extends StatefulWidget {
   final String baseUrl;
@@ -249,28 +250,46 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   }
 
 void _showSuccessDialog() {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Product Added Successfully'),
-        content: Text('Your product has been added successfully.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              setState(() {
-                _image = null;
-                _nameController.clear();
-                _priceController.clear();
-              });
-            },
-            child: Text('OK'),
-          ),
-        ],
-      );
-    },
-  );
+  // showDialog(
+  //   context: context,
+  //   builder: (BuildContext context) {
+  //     return AlertDialog(
+  //       title: Text('Product Added Successfully'),
+  //       content: Text('Your product has been added successfully.'),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.of(context).pop();
+  //             setState(() {
+  //               _image = null;
+  //               _nameController.clear();
+  //               _priceController.clear();
+  //             });
+  //           },
+  //           child: Text('OK'),
+  //         ),
+  //       ],
+  //     );
+  //   },
+  // );
+
+    AwesomeDialog(
+  context: context,
+  dialogType: DialogType.success,
+  animType: AnimType.rightSlide,
+  title: 'Product Added Successfully',
+  desc: 'Your product has been added successfully.',
+  btnOkOnPress: () {
+    setState(() {
+      _image = null;
+      _nameController.clear();
+      _priceController.clear();
+    });
+  },
+)..show();
+
+
+
 }
 
 

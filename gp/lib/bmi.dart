@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class BMIPage extends StatefulWidget {
   final String baseUrl;
@@ -53,23 +54,35 @@ class _BMIPageState extends State<BMIPage> {
   }
 
   void _showAlertDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     return AlertDialog(
+    //       title: Text('Error'),
+    //       content: Text(message),
+    //       actions: <Widget>[
+    //         TextButton(
+    //           onPressed: () {
+    //             Navigator.of(context).pop();
+    //           },
+    //           child: Text('OK'),
+    //         ),
+    //       ],
+    //     );
+    //   },
+    // );
+
+  AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            animType: AnimType.rightSlide,
+            title: 'Error',
+            desc: 'Please fill in all fields.',
+            // btnCancelOnPress: () {},
+            btnOkOnPress: () {},
+            )..show();
+
+
   }
 
 //   @override

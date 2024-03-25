@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'loginPage.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
  class ProfilePage extends StatefulWidget {
   final String baseUrl;
@@ -46,26 +47,50 @@ class _ProfilePageState extends State<ProfilePage> {
         // Clear text fields
         oldPasswordController.clear();
         newPasswordController.clear();
-          showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Success'),
-              content: Text('Password changed successfully.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Close'),
-                ),
-              ],
-            );
-          },
-        );
+        //   showDialog(
+        //   context: context,
+        //   builder: (BuildContext context) {
+        //     return AlertDialog(
+        //       title: Text('Success'),
+        //       content: Text('Password changed successfully.'),
+        //       actions: [
+        //         TextButton(
+        //           onPressed: () {
+        //             Navigator.of(context).pop();
+        //           },
+        //           child: Text('Close'),
+        //         ),
+        //       ],
+        //     );
+        //   },
+        // );
+
+
+        AwesomeDialog(
+            context: context,
+            dialogType: DialogType.success,
+            animType: AnimType.rightSlide,
+            title: 'Success',
+            desc: 'Password changed successfully.',
+            // btnCancelOnPress: () {},
+            btnOkOnPress: () {},
+            )..show();
+
+
+
         // Show success message or perform any additional actions
       } else {
         print('Password change failed: ${response.body}');
+             AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            animType: AnimType.rightSlide,
+            title: 'Error',
+            desc: 'Password change failed ',
+            // btnCancelOnPress: () {},
+            btnOkOnPress: () {},
+            )..show();
+
         // Show error message or handle error scenarios
       }
     } catch (e) {
@@ -78,7 +103,19 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('Profile',style: TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+          color: Colors.blue[800],
+        ),),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          iconSize: 40,
+          color: Colors.blue[800],
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(1.0),
@@ -147,7 +184,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Text(
                   'Change Password',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(color: Colors.blue[800],fontWeight: FontWeight.bold,fontSize: 18),
                 ),
               ),
             ),
