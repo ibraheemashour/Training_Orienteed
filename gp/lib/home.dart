@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 // import 'package:draggable_expandable_fab/draggable_expandable_fab.dart';
 import 'loginPage.dart';
 import 'market.dart';
+import 'mypost.dart';
 import 'profile.dart';
 import 'showposts.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -147,13 +148,15 @@ class _HomePageState extends State<HomePage> {
 
     AwesomeDialog(
       context: context,
-      dialogType: DialogType.warning,
+      dialogType: DialogType.noHeader,
       animType: AnimType.rightSlide,
       title: "Likes",
       desc: "", // You can leave this empty if you don't need a description
+      width: 600,
       body: Column(
+         
         mainAxisSize: MainAxisSize.min,
-        children: likes.map((user) => Text(user)).toList(),
+        children: likes.map((user) => Text(user,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),)).toList(),
       ),
       btnCancelText: "Close",
       btnCancelOnPress: () {},
@@ -671,6 +674,9 @@ class _HomePageState extends State<HomePage> {
           // Handle navigation
           if (indexOfItem == 0) {
             print('Home');
+                  
+            fetchPosts();
+
           }
           if (indexOfItem == 1) {
             print('Search');
@@ -719,24 +725,33 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.book),
-              title: const Text(' My Course '),
+              leading: const Icon(Icons.sports_gymnastics),
+              title: const Text(' My Exercises '),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              leading: const Icon(Icons.workspace_premium),
-              title: const Text(' Go Premium '),
+              leading: const Icon(Icons.restaurant),
+              title: const Text(' Foods'),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              leading: const Icon(Icons.video_label),
-              title: const Text(' Saved Videos '),
+              leading: const Icon(Icons.post_add),
+              title: const Text(' My Posts'),
               onTap: () {
-                Navigator.pop(context);
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => myPosts(
+                      baseUrl: widget.baseUrl,
+                      username: widget.name,
+                       
+                    ),
+                  ),
+                );
               },
             ),
             ListTile(

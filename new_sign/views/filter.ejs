@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="/style.css"> -->
+    <link rel="stylesheet" href="/style.css">
     <title>Exercise Filters</title>
 </head>
 <style>
@@ -35,13 +35,20 @@ h1 {
 /* List styles */
 ul {
     list-style-type: none;
-    padding: 0;
+    padding: 5px;
     margin: 0 auto;
-    width: 80%;
+    
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
 }
 
 li {
     padding: 10px 0;
+    
 }
 
 /* Link styles */
@@ -60,20 +67,63 @@ a:hover {
     ul {
         width: 100%;
     }
+
 }
 
+.exercise-image {
+    width: 300px; /* Set the width of the image */
+    height: 300px; /* Maintain aspect ratio */
+    border-radius: 50%;
+}
+.exercise-wrapper {
+    text-align: center;
+}
 </style>
 <body>
+    
     <h1>Exercise Filters</h1>
     <ul>
- 
-        <li><a href="/exercises/Abs">Abs</a></li>
-        <li><a href="/exercises/Arms">Arms</a></li>
-        <li><a href="/exercises/Back">Back</a></li>
-        <!-- <li><a href="/exercises/Cardio">Cardio</a></li> -->
-        <li><a href="/exercises/Chest">Chest</a></li>
-        <li><a href="/exercises/Legs">Legs</a></li>
-        <li><a href="/exercises/Shoulders">Shoulders</a></li>
+        <div class="exercise-wrapper">
+            <a href="/exercises/Abs">
+                <img src="human-abs-vector-cartoon-illustration-600w-2128378241.webp" alt="Abs" class="exercise-image">
+            </a>
+            <li><a href="/exercises/Abs">Abs</a></li>
+        </div>
+        
+        <div class="exercise-wrapper">
+            <a href="/exercises/Arms">
+                <img src="arms.jpg" alt="Arms" class="exercise-image">
+            </a>
+            <li><a href="/exercises/Arms">Arms</a></li>
+        </div>
+
+        <div class="exercise-wrapper">
+            <a href="/exercises/Back">
+                <img src="back.jpg" alt="Back" class="exercise-image">
+            </a>
+            <li><a href="/exercises/Back">Back</a></li>
+        </div>
+
+        <div class="exercise-wrapper">
+            <a href="/exercises/Chest">
+                <img src="chest_0.jpg" alt="Chest" class="exercise-image">
+            </a>
+            <li><a href="/exercises/Chest">Chest</a></li>
+        </div>
+
+        <div class="exercise-wrapper">
+            <a href="/exercises/Legs">
+                <img src="legs.png" alt="Legs" class="exercise-image">
+            </a>
+            <li><a href="/exercises/Legs">Legs</a></li>
+        </div>
+
+        <div class="exercise-wrapper">
+            <a href="/exercises/Shoulders">
+                <img src="shoulders_0.jpg" alt="Shoulders" class="exercise-image">
+            </a>
+            <li><a href="/exercises/Shoulders">Shoulders</a></li>
+        </div>
     </ul>
 </body>
 </html>
