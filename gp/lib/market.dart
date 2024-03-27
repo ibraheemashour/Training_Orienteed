@@ -6,8 +6,8 @@ import 'CategoryPage.dart';
 import 'addproduct.dart';
 import 'exerciseslist.dart';
 import 'product.dart';
-import 'showexercises.dart';
-import 'signupPage.dart';
+// import 'showexercises.dart';
+// import 'signupPage.dart';
 import 'bmi.dart';
 import 'bfp.dart';
 
@@ -355,5 +355,3 @@ class _MarketPageState extends State<Market> {
   }
 }
 
-/////////////////
- 

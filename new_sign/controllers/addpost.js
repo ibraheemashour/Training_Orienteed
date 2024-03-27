@@ -183,3 +183,38 @@ exports.deletePost = async (req, res) => {
       res.status(500).send('Failed to delete post');
   }
 };
+
+
+
+exports.deleteComment = async (req, res) => {
+
+  try {
+      // Extract postId and commentIndex from request parameters
+      const { idPost, commentIndex } = req.params;
+      
+      // Find the post by postId
+      const post = await Post.findOne({ idPost });
+
+      // Check if the post exists
+      if (!post) {
+          return res.status(404).send('Post not found');
+      }
+
+      // Check if the commentIndex is valid
+      if (commentIndex < 0 || commentIndex >= post.comments.length) {
+          return res.status(400).send('Invalid comment index');
+      }
+
+      // Remove the comment at the specified index
+      post.comments.splice(commentIndex, 1);
+      
+      // Save the updated post
+      await post.save();
+
+      // Return success message
+      res.status(200).send('Comment deleted successfully');
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('Failed to delete comment');
+  }
+};

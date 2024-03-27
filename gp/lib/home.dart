@@ -125,27 +125,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void showLikesDialog(List<String> likes) {
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     return AlertDialog(
-    //       title: Text("Likes"),
-    //       content: Column(
-    //         mainAxisSize: MainAxisSize.min,
-    //         children: likes.map((user) => Text(user)).toList(),
-    //       ),
-    //       actions: <Widget>[
-    //         TextButton(
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text("Close"),
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
-
     AwesomeDialog(
       context: context,
       dialogType: DialogType.noHeader,
@@ -154,14 +133,17 @@ class _HomePageState extends State<HomePage> {
       desc: "", // You can leave this empty if you don't need a description
       width: 600,
       body: Column(
-         
         mainAxisSize: MainAxisSize.min,
-        children: likes.map((user) => Text(user,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),)).toList(),
+        children: likes
+            .map((user) => Text(
+                  user,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ))
+            .toList(),
       ),
       btnCancelText: "Close",
       btnCancelOnPress: () {},
     )..show();
-
   }
 
   Future<void> _pickImageFromGallery() async {
@@ -208,29 +190,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _showSuccessDialog() {
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     return AlertDialog(
-    //       title: Text('Post Added Successfully'),
-    //       content: Text('Your post has been added successfully.'),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //             setState(() {
-    //               _image = null;
-    //               _titleController.clear();
-    //               _contentController.clear();
-    //             });
-    //           },
-    //           child: Text('OK'),
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
-
     AwesomeDialog(
       context: context,
       dialogType: DialogType.success,
@@ -290,7 +249,10 @@ class _HomePageState extends State<HomePage> {
             // Padding(
             // padding: const EdgeInsets.all(8.0),
             UserAccountsDrawerHeader(
-              accountName: Text(" "+post.author,style: TextStyle(  fontSize: 20),),
+              accountName: Text(
+                " " + post.author,
+                style: TextStyle(fontSize: 20),
+              ),
               accountEmail: Text(""),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.lightBlue,
@@ -299,10 +261,8 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontSize: 28.0, color: Colors.white),
                 ),
               ),
-              
               decoration: BoxDecoration(
                 color: Colors.blue,
-                
               ),
             ),
 
@@ -488,7 +448,6 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.blue,
         elevation: 50.0,
       ),
-
       body: ListView.builder(
         itemCount: posts.length,
         itemBuilder: (context, index) {
@@ -568,91 +527,6 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Icon(Icons.add),
       ),
-
-      // floatingActionButtonAnimator: NoScalingAnimation(),
-      //   floatingActionButtonLocation: ExpandableFloatLocation(),
-      //   floatingActionButton: ExpandableDraggableFab(childrenCount: 1,
-      //   distance: 100,// Animatiion distance during open and close.
-
-      //   children: [
-
-      //     FloatingActionButton(onPressed: (){
-
-      //         if (!isDialogOpen) { // Check if the dialog is not already open
-      //     showDialog(
-      //       context: context,
-      //       barrierDismissible: false, // Prevent dialog dismissal on outside tap
-      //       builder: (BuildContext context) {
-      //         isDialogOpen = true; // Set dialog open state to true
-      //         return StatefulBuilder(
-      //           builder: (BuildContext context, StateSetter setState) {
-      //             return AlertDialog(
-      //               title: Text('Add Post'),
-      //               content: SingleChildScrollView(
-      //                 child: Column(
-      //                   mainAxisSize: MainAxisSize.min,
-      //                   children: <Widget>[
-      //                     _image != null
-      //                         ? Image.file(_image!, width: 100, height: 100)
-      //                         : Container(),
-      //                     SizedBox(height: 10),
-      //                     TextField(
-      //                       controller: _titleController,
-      //                       decoration: InputDecoration(
-      //                         labelText: 'Title',
-      //                         border: OutlineInputBorder(),
-      //                       ),
-      //                     ),
-      //                     SizedBox(height: 10),
-      //                     TextField(
-      //                       controller: _contentController,
-      //                       decoration: InputDecoration(
-      //                         labelText: 'Content',
-      //                         border: OutlineInputBorder(),
-      //                       ),
-      //                     ),
-      //                     SizedBox(height: 10),
-      //                     ElevatedButton(
-      //                       onPressed: () async {
-      //                         await _pickImageFromGallery();
-      //                         setState(
-      //                             () {}); // Update the state to rebuild the dialog with the selected image
-      //                       },
-      //                       child: Text('Select Image'),
-      //                     ),
-      //                   ],
-      //                 ),
-      //               ),
-      //               actions: <Widget>[
-      //                 TextButton(
-      //                   onPressed: () {
-      //                     isDialogOpen = false; // Set dialog open state to false
-      //                     Navigator.of(context).pop();
-      //                   },
-      //                   child: Text('Cancel'),
-      //                 ),
-      //                 ElevatedButton(
-      //                   onPressed: () {
-      //                     _addPost();
-      //                     isDialogOpen = false; // Set dialog open state to false
-      //                     Navigator.of(context).pop();
-      //                   },
-      //                   child: Text('Add'),
-      //                 ),
-      //               ],
-      //             );
-      //           },
-      //         );
-      //       },
-      //     );
-      //   }
-      //     },
-      //     child: Icon(Icons.add),
-
-      //     ),
-
-      //   ],),
-
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         fixedColor: const Color.fromARGB(255, 13, 105, 151),
@@ -674,9 +548,8 @@ class _HomePageState extends State<HomePage> {
           // Handle navigation
           if (indexOfItem == 0) {
             print('Home');
-                  
-            fetchPosts();
 
+            fetchPosts();
           }
           if (indexOfItem == 1) {
             print('Search');
@@ -742,13 +615,12 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.post_add),
               title: const Text(' My Posts'),
               onTap: () {
-                 Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => myPosts(
                       baseUrl: widget.baseUrl,
                       username: widget.name,
-                       
                     ),
                   ),
                 );

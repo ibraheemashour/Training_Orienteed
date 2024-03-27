@@ -25,232 +25,118 @@ class _BfpCalculatorState extends State<BfpCalculator> {
   String leanMass = '';
   String description = '';
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('BFP Calculator',style: TextStyle(
-  //                   fontSize: 25,
-  //                   fontWeight: FontWeight.bold,
-  //                   color: Colors.blue[800]),),
-  //       leading: IconButton(
-  //                     icon: Icon(Icons.arrow_back),
-  //                     iconSize: 40,
-  //                     color: Colors.blue[800],
-  //                     onPressed: () {
-  //                       Navigator.of(context).pop();
-  //                     },
-  //                   ),
-  //     ),
-  //     body: Padding(
-  //       padding: EdgeInsets.all(16.0),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.stretch,
-  //         children: [
-  //                  Image.network(
-  //           'https://www.fittr.com/assets/images/og/body-fat-calculator-og.jpg', // Change this to the path of your image
-  //           width: 150, // Adjust as needed
-  //           height: 160, // Adjust as needed
-  //         ),
-  //           TextField(
-  //             controller: weightController,
-  //             decoration: InputDecoration(labelText: 'Weight (kg)'),
-  //             keyboardType: TextInputType.number,
-  //           ),
-  //           TextField(
-  //             controller: heightController,
-  //             decoration: InputDecoration(labelText: 'Height (cm)'),
-  //             keyboardType: TextInputType.number,
-  //           ),
-  //           TextField(
-  //             controller: ageController,
-  //             decoration: InputDecoration(labelText: 'Age'),
-  //             keyboardType: TextInputType.number,
-  //           ),
-  //           SizedBox(height: 16.0),
-  //           Row(
-  //             children: [
-  //               Expanded(
-                  
-  //                 child: ListTile(
-  //                   title: Text('Male'),
-  //                   leading: Radio(
-  //                     value: Gender.male,
-  //                     groupValue: _selectedGender,
-  //                     onChanged: (Gender? value) {
-  //                       setState(() {
-  //                         _selectedGender = value;
-  //                       });
-  //                     },
-  //                   ),
-  //                 ),
-  //               ),
-  //               Expanded(
-                  
-  //                 child: ListTile(
-  //                   title: Text('Female'),
-  //                   leading: Radio(
-  //                     value: Gender.female,
-  //                     groupValue: _selectedGender,
-  //                     onChanged: (Gender? value) {
-  //                       setState(() {
-  //                         _selectedGender = value;
-  //                       });
-  //                     },
-  //                   ),
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //           SizedBox(height: 16.0),
-  //           ElevatedButton(
-  //             onPressed: () {
-  //               if (_validateInputs()) {
-  //                 calculateBfp();
-  //               } else {
-  //                 _showAlertDialog('Please fill in all fields and select gender.');
-  //               }
-  //             },
-  //             child: Text('Calculate', style: TextStyle(
-  //               fontSize: 20.0,
-  //                fontWeight: FontWeight.bold,
-  //                color: Colors.blue[800],
-  //                )),
-  //           ),
-  //           SizedBox(height: 16.0),
-  //           Text('BFP: $bfp', style: TextStyle(
-  //             fontSize: 20.0,
-  //             //  fontWeight: FontWeight.bold,
-  //           )),
-  //           Text('Fat Mass: $fatMass', style: TextStyle(
-  //             fontSize: 20.0,
-  //             //  fontWeight: FontWeight.bold,
-  //           )),
-  //           Text('Lean Mass: $leanMass', style: TextStyle(
-  //             fontSize: 20.0,
-  //             //  fontWeight: FontWeight.bold,
-  //           )),
-  //           Text('Description: $description', style: TextStyle(
-  //             fontSize: 20.0,
-  //             //  fontWeight: FontWeight.bold,
-  //           )),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: Text(
-        'BFP Calculator',
-        style: TextStyle(
-          fontSize: 25,
-          fontWeight: FontWeight.bold,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'BFP Calculator',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.blue[800],
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          iconSize: 40,
           color: Colors.blue[800],
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
       ),
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back),
-        iconSize: 40,
-        color: Colors.blue[800],
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      ),
-    ),
-    body: SingleChildScrollView( // Add SingleChildScrollView here
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Image.network(
-              'https://www.fittr.com/assets/images/og/body-fat-calculator-og.jpg',
-              width: 150,
-              height: 180,
-            ),
-            TextField(
-              controller: weightController,
-              decoration: InputDecoration(labelText: 'Weight (kg)'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: heightController,
-              decoration: InputDecoration(labelText: 'Height (cm)'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: ageController,
-              decoration: InputDecoration(labelText: 'Age'),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              children: [
-                Expanded(
-                  child: ListTile(
-                    title: Text('Male'),
-                    leading: Radio(
-                      value: Gender.male,
-                      groupValue: _selectedGender,
-                      onChanged: (Gender? value) {
-                        setState(() {
-                          _selectedGender = value;
-                        });
-                      },
+      body: SingleChildScrollView(
+        // Add SingleChildScrollView here
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Image.network(
+                'https://www.fittr.com/assets/images/og/body-fat-calculator-og.jpg',
+                width: 150,
+                height: 180,
+              ),
+              TextField(
+                controller: weightController,
+                decoration: InputDecoration(labelText: 'Weight (kg)'),
+                keyboardType: TextInputType.number,
+              ),
+              TextField(
+                controller: heightController,
+                decoration: InputDecoration(labelText: 'Height (cm)'),
+                keyboardType: TextInputType.number,
+              ),
+              TextField(
+                controller: ageController,
+                decoration: InputDecoration(labelText: 'Age'),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 16.0),
+              Row(
+                children: [
+                  Expanded(
+                    child: ListTile(
+                      title: Text('Male'),
+                      leading: Radio(
+                        value: Gender.male,
+                        groupValue: _selectedGender,
+                        onChanged: (Gender? value) {
+                          setState(() {
+                            _selectedGender = value;
+                          });
+                        },
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: ListTile(
-                    title: Text('Female'),
-                    leading: Radio(
-                      value: Gender.female,
-                      groupValue: _selectedGender,
-                      onChanged: (Gender? value) {
-                        setState(() {
-                          _selectedGender = value;
-                        });
-                      },
+                  Expanded(
+                    child: ListTile(
+                      title: Text('Female'),
+                      leading: Radio(
+                        value: Gender.female,
+                        groupValue: _selectedGender,
+                        onChanged: (Gender? value) {
+                          setState(() {
+                            _selectedGender = value;
+                          });
+                        },
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                if (_validateInputs()) {
-                  calculateBfp();
-                } else {
-                  _showAlertDialog('Please fill in all fields and select gender.');
-                }
-              },
-              child: Text(
-                'Calculate',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue[800],
+                ],
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  if (_validateInputs()) {
+                    calculateBfp();
+                  } else {
+                    _showAlertDialog(
+                        'Please fill in all fields and select gender.');
+                  }
+                },
+                child: Text(
+                  'Calculate',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue[800],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Text('BFP: $bfp', style: TextStyle(fontSize: 20.0)),
-            Text('Fat Mass: $fatMass', style: TextStyle(fontSize: 20.0)),
-            Text('Lean Mass: $leanMass', style: TextStyle(fontSize: 20.0)),
-            Text('Description: $description', style: TextStyle(fontSize: 20.0)),
-          ],
+              SizedBox(height: 16.0),
+              Text('BFP: $bfp', style: TextStyle(fontSize: 20.0)),
+              Text('Fat Mass: $fatMass', style: TextStyle(fontSize: 20.0)),
+              Text('Lean Mass: $leanMass', style: TextStyle(fontSize: 20.0)),
+              Text('Description: $description',
+                  style: TextStyle(fontSize: 20.0)),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   bool _validateInputs() {
     return weightController.text.isNotEmpty &&
@@ -288,43 +174,22 @@ Widget build(BuildContext context) {
         leanMass = data['lean_mass'].toString();
         description = data['description'].toString();
       });
-      print('Response BFP: $bfp'); // Add this line to print BFP value from response
+      print(
+          'Response BFP: $bfp'); // Add this line to print BFP value from response
     } else {
       throw Exception('Failed to load data');
     }
   }
 
   void _showAlertDialog(String message) {
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     return AlertDialog(
-    //       title: Text('Error'),
-    //       content: Text(message),
-    //       actions: <Widget>[
-    //         TextButton(
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text('OK'),
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
-
-
-      AwesomeDialog(
-            context: context,
-            dialogType: DialogType.error,
-            animType: AnimType.rightSlide,
-            title: 'Error',
-            desc: 'Please fill in all fields.',
-            // btnCancelOnPress: () {},
-            btnOkOnPress: () {},
-            )..show();
-
-
-
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.rightSlide,
+      title: 'Error',
+      desc: 'Please fill in all fields.',
+      // btnCancelOnPress: () {},
+      btnOkOnPress: () {},
+    )..show();
   }
 }

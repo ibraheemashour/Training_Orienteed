@@ -22,6 +22,11 @@ router.post('/posts/:idPost/comments' , AddPost.getcomment);
 router.delete('/deleteposts/:idPost', AddPost.deletePost);
 
 
+
+router.delete('/posts/:idPost/comments/:commentIndex', AddPost.deleteComment);
+
+
+
 router.get('/posts', AddPost.getposts); 
 
 

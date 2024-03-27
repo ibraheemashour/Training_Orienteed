@@ -3,10 +3,11 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:gp/loginPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // Import for jsonEncode
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class SignupPage extends StatefulWidget {
   final String baseUrl;
-  //const signupPage({super.key});
+
   const SignupPage({Key? key, required this.baseUrl}) : super(key: key);
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -74,17 +75,29 @@ class _SignupPageState extends State<SignupPage> {
       if (response.statusCode == 200) {
         // Signup successful
         print('Signup successful!');
-        // Navigate to login page
-        Navigator.pushReplacement(
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.success,
+          animType: AnimType.rightSlide,
+          title: 'Done',
+          desc: 'Registration Successful',
+          // btnCancelOnPress: () {},
+          btnOkOnPress: () {
+             Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => LoginPage(baseUrl: widget.baseUrl)),
         );
+          },
+        )..show();
+        // Navigate to login page
+       
       } else {
         // Some other error happened
         print('Signup failed with status code: ${response.statusCode}');
         print('Response body: ${response.body}');
 
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -94,6 +107,7 @@ class _SignupPageState extends State<SignupPage> {
                 style: TextStyle(color: Colors.red),
               ),
               content: Text(
+                // ignore: unnecessary_null_comparison
                 response.body != null ? response.body : "Some Error Happened",
                 style: TextStyle(
                     color: Colors.black,
@@ -122,7 +136,11 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Signup'),
+        title: Text('Signup',style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.blue[800],
+          ),),
       ),
       body: SingleChildScrollView(
         child: Padding(

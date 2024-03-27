@@ -45,12 +45,12 @@ button:hover {
 }
 
 img.avatar {
-  width: 10%;
+  width:15%;
   border-radius: 50%;
 }
 
 .container {
-  padding: 16px;
+  padding: 2px;
 }
 
 span.password {
@@ -85,7 +85,13 @@ h1{
 
 
 
-
+.login{
+  background-image: url(img2.jpg);
+  background-size: cover;
+  background-repeat: no-repeat; 
+  background-attachment: fixed;
+  background-origin: padding-box;
+}
 
 
 

@@ -49,7 +49,7 @@ const Filter = require('../routes/filters');
 // const exerciseCatogery = require('../routes/excersises');
 const recipes = require('../routes/recipes');
 const getposts=require('../routes/addsposts');
- 
+const category = require('../routes/categorys');
 
 app.set('view engine','ejs');
 app.use(express.static(__dirname + "/public"));
@@ -92,7 +92,7 @@ app.use(Filter);
 // app.use(exerciseCatogery);
 app.use(recipes);
 app.use(getposts);
-
+app.use(category);
 
 
 

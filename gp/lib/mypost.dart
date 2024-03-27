@@ -155,6 +155,40 @@ class _myPostsState extends State<myPosts> {
     }
   }
 
+  Future<void> _deleteComment(int postId, int commentIndex) async {
+    final response = await http.delete(
+      Uri.parse('${widget.baseUrl}/posts/$postId/comments/$commentIndex'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        // Remove the comment from the corresponding post
+        posts
+            .firstWhere((post) => post.idPost == postId)
+            .comments
+            .removeAt(commentIndex);
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.success,
+          animType: AnimType.rightSlide,
+          title: "Delete Comment",
+          desc: "", // You can leave this empty if you don't need a description
+          width: 600,
+          body: Text("Comment deleted successfully"),
+          btnCancelText: "Close",
+          btnCancelOnPress: () {},
+        )..show();
+      });
+    } else {
+      print('Failed to delete comment. Status code: ${response.statusCode}');
+    }
+  }
+
+  void _onDeleteCommentPressed(int postId, int commentIndex) {
+    _deleteComment(postId, commentIndex);
+  }
+
   void showLikesDialog(List<String> likes) {
     AwesomeDialog(
       context: context,
@@ -200,6 +234,8 @@ class _myPostsState extends State<myPosts> {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+
+          // Inside the build method of your _myPostsState class
           children: List.generate(posts.length, (index) {
             final post = posts[index];
             // Check if the post's author matches the current user
@@ -247,14 +283,6 @@ class _myPostsState extends State<myPosts> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Text("Posted By : "+
-                            //   post.author,
-                            //   style: TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),
-                            // ),
-                            SizedBox(height: 4),
                             Text(
                               "Title : " + post.title,
                               style: TextStyle(
@@ -267,11 +295,6 @@ class _myPostsState extends State<myPosts> {
                               post.content,
                               style: TextStyle(fontSize: 16),
                             ),
-                            SizedBox(height: 4),
-                            // Text(
-                            //   post.author,
-                            //   style: TextStyle(fontSize: 16),
-                            // ),
                             SizedBox(height: 8),
                             TextField(
                               controller: _commentController,
@@ -355,26 +378,68 @@ class _myPostsState extends State<myPosts> {
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
-                                                    children: post.comments
-                                                        .map((comment) => Text(
-                                                              '${comment.username}: ${comment.text}',
-                                                              style: TextStyle(
-                                                                  fontSize: 16),
-                                                            ))
-                                                        .toList(),
+                                                    children: List.generate(
+                                                      post.comments.length,
+                                                      (commentIndex) {
+                                                        final comment =
+                                                            post.comments[
+                                                                commentIndex];
+                                                        return Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: Text(
+                                                                '${comment.username}: ${comment.text}',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        16),
+                                                              ),
+                                                            ),
+                                                            IconButton(
+                                                              icon: Icon(
+                                                                  Icons.close),
+                                                              onPressed: () {
+                                                                _onDeleteCommentPressed(
+                                                                    post.idPost,
+                                                                    commentIndex);
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    ),
                                                   ),
                                                 ],
                                               )
                                             : Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
-                                                children: post.comments
-                                                    .map((comment) => Text(
-                                                          '${comment.username}: ${comment.text}',
-                                                          style: TextStyle(
-                                                              fontSize: 16),
-                                                        ))
-                                                    .toList(),
+                                                children: List.generate(
+                                                  post.comments.length,
+                                                  (commentIndex) {
+                                                    final comment = post
+                                                        .comments[commentIndex];
+                                                    return Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                            '${comment.username}: ${comment.text}',
+                                                            style: TextStyle(
+                                                                fontSize: 16),
+                                                          ),
+                                                        ),
+                                                        IconButton(
+                                                          icon:
+                                                              Icon(Icons.close),
+                                                          onPressed: () {
+                                                            _onDeleteCommentPressed(
+                                                                post.idPost,
+                                                                commentIndex);
+                                                          },
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                ),
                                               ),
                                       ],
                                     ),

@@ -26,7 +26,8 @@ exports.postLoginPageWeb=async(req,res)=>{
         if(user){
             req.session.user = { email, email: user.email };
             console.log("the name is "+user.username);
-            res.redirect('/Home');
+            // res.redirect('/Home');
+            res.redirect('/category');
         }else{
             console.log('not found');
             res.redirect('/');

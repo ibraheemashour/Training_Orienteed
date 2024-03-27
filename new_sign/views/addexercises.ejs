@@ -7,7 +7,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
 </head>
+<style>
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 20px;
+        width: 300px;
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        height: 430px;
+        
+    }
+    .card img {
+        max-width: 100%;
+        height: auto;
+    }
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 20px;
+
+    }
+
+    .button1{
+        margin-top: 8px;
+    }
+    .test{
+        margin-top: 34px;
+    }
+    
+</style>
 <body>
+    <div class="container">
+        <div class="card">
+            <img src="all.png" alt="Image 1">
+            <h2 class="test">Show All Excercises</h2>
+            <a href="/exercises"><button class="button1">Excercises</button></a>
+        </div>
+        <div class="card">
+            <img src="list.webp" alt="Image 2">
+            <h2>Category Of Excercises</h2>
+            <a href="/filter"><button>Category Of Excercises</button></a>
+        </div>
+    </div>
+    
+
     <h2>Add Category Exercise</h2>
     <form action="/CategoryExercise" method="post">
         <label for="type">Type of Exercise:</label>
